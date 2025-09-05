@@ -1,0 +1,15 @@
+{
+  "name": "agentic-toolkit",
+  "version": "1.0.0",
+  "description": "A toolkit for planning app development and breaking down dependencies into hierarchical tasks to minimize errors.",
+  "main": "index.js",
+  "scripts": {
+    "start": "node .",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": ["planning", "development", "tasks", "dependencies"],
+  "author": "Your Name",
+  "license": "MIT",
+  "dependencies": {},
+  "devDependencies": {}
+}
