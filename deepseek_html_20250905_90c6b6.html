@@ -1,0 +1,1035 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Agentic Toolkit - Complete Implementation</title>
+    <style>
+        :root {
+            --primary: #3498db;
+            --secondary: #2ecc71;
+            --accent: #e74c3c;
+            --dark: #2c3e50;
+            --light: #ecf0f1;
+            --code-bg: #f8f9fa;
+            --terminal-bg: #1e1e1e;
+            --terminal-text: #f0f0f0;
+            --border: #ddd;
+        }
+        
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background-color: #f5f7f9;
+            padding: 0;
+            margin: 0;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        
+        header {
+            background: linear-gradient(135deg, var(--primary), var(--dark));
+            color: white;
+            padding: 2rem 0;
+            text-align: center;
+            margin-bottom: 2rem;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+        
+        h1, h2, h3, h4 {
+            color: var(--dark);
+            margin-top: 1.5em;
+            margin-bottom: 0.5em;
+        }
+        
+        h1 {
+            font-size: 2.5rem;
+            border-bottom: 2px solid var(--primary);
+            padding-bottom: 0.5rem;
+        }
+        
+        h2 {
+            font-size: 2rem;
+            color: var(--primary);
+        }
+        
+        h3 {
+            font-size: 1.5rem;
+            color: var(--secondary);
+        }
+        
+        p {
+            margin-bottom: 1rem;
+        }
+        
+        pre {
+            background-color: var(--code-bg);
+            border: 1px solid var(--border);
+            border-radius: 4px;
+            padding: 1rem;
+            overflow-x: auto;
+            margin: 1.5rem 0;
+            font-family: 'Consolas', 'Monaco', monospace;
+        }
+        
+        code {
+            font-family: 'Consolas', 'Monaco', monospace;
+            background-color: var(--code-bg);
+            padding: 0.2rem 0.4rem;
+            border-radius: 3px;
+        }
+        
+        .card {
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            padding: 1.5rem;
+            margin: 1.5rem 0;
+            transition: transform 0.2s;
+        }
+        
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.15);
+        }
+        
+        .card-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1rem;
+            border-bottom: 1px solid var(--border);
+            padding-bottom: 0.5rem;
+        }
+        
+        .step-number {
+            display: inline-block;
+            width: 30px;
+            height: 30px;
+            background-color: var(--primary);
+            color: white;
+            border-radius: 50%;
+            text-align: center;
+            line-height: 30px;
+            margin-right: 10px;
+        }
+        
+        .badge {
+            display: inline-block;
+            padding: 0.25rem 0.5rem;
+            border-radius: 4px;
+            font-size: 0.8rem;
+            font-weight: bold;
+            margin-right: 0.5rem;
+        }
+        
+        .badge-primary {
+            background-color: var(--primary);
+            color: white;
+        }
+        
+        .badge-secondary {
+            background-color: var(--secondary);
+            color: white;
+        }
+        
+        .badge-accent {
+            background-color: var(--accent);
+            color: white;
+        }
+        
+        .component-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 20px;
+            margin: 2rem 0;
+        }
+        
+        .component-card {
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            padding: 1.5rem;
+            transition: transform 0.2s;
+        }
+        
+        .component-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.15);
+        }
+        
+        .component-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1rem;
+            border-bottom: 1px solid var(--border);
+            padding-bottom: 0.5rem;
+        }
+        
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 1.5rem 0;
+            background-color: white;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            border-radius: 8px;
+            overflow: hidden;
+        }
+        
+        th, td {
+            padding: 0.75rem 1rem;
+            text-align: left;
+            border-bottom: 1px solid var(--border);
+        }
+        
+        th {
+            background-color: var(--primary);
+            color: white;
+            font-weight: 600;
+        }
+        
+        tr:nth-child(even) {
+            background-color: var(--light);
+        }
+        
+        /* CLI Terminal */
+        .terminal {
+            background-color: var(--terminal-bg);
+            color: var(--terminal-text);
+            border-radius: 8px;
+            padding: 1.5rem;
+            margin: 2rem 0;
+            font-family: 'Consolas', 'Monaco', monospace;
+            height: 400px;
+            overflow-y: auto;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+        }
+        
+        .terminal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 1px solid #444;
+        }
+        
+        .terminal-prompt {
+            color: var(--secondary);
+            margin-right: 0.5rem;
+        }
+        
+        .terminal-input {
+            display: flex;
+            align-items: center;
+            margin-top: 1rem;
+        }
+        
+        .terminal-input input {
+            flex-grow: 1;
+            background: transparent;
+            border: none;
+            color: var(--terminal-text);
+            font-family: 'Consolas', 'Monaco', monospace;
+            font-size: 1rem;
+            outline: none;
+        }
+        
+        .cmd {
+            color: var(--secondary);
+            margin-bottom: 0.5rem;
+        }
+        
+        .response {
+            margin-bottom: 1rem;
+            color: #aaccff;
+        }
+        
+        .error {
+            color: #ff6b6b;
+        }
+        
+        .success {
+            color: var(--secondary);
+        }
+        
+        /* Task Visualization */
+        .task-visualization {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 15px;
+            margin: 2rem 0;
+        }
+        
+        .task-node {
+            background: white;
+            border-radius: 8px;
+            padding: 1rem;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+            border-left: 4px solid var(--primary);
+        }
+        
+        .task-node.completed {
+            border-left-color: var(--secondary);
+            opacity: 0.8;
+        }
+        
+        .task-node.high-priority {
+            border-left-color: var(--accent);
+        }
+        
+        .task-title {
+            font-weight: bold;
+            margin-bottom: 0.5rem;
+        }
+        
+        .task-meta {
+            font-size: 0.8rem;
+            color: #666;
+        }
+        
+        /* Tabs */
+        .tabs {
+            display: flex;
+            margin-bottom: 1rem;
+            border-bottom: 1px solid var(--border);
+        }
+        
+        .tab {
+            padding: 0.75rem 1.5rem;
+            cursor: pointer;
+            background: #f0f0f0;
+            border-radius: 5px 5px 0 0;
+            margin-right: 5px;
+        }
+        
+        .tab.active {
+            background: white;
+            border: 1px solid var(--border);
+            border-bottom: none;
+        }
+        
+        .tab-content {
+            display: none;
+        }
+        
+        .tab-content.active {
+            display: block;
+        }
+        
+        /* File Tree */
+        .file-tree {
+            font-family: monospace;
+            line-height: 1.8;
+            background-color: white;
+            padding: 1.5rem;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            margin: 1.5rem 0;
+        }
+        
+        .file-tree ul {
+            list-style-type: none;
+            padding-left: 1.5rem;
+        }
+        
+        .file-tree li {
+            position: relative;
+        }
+        
+        .file-tree li:before {
+            content: "📄 ";
+        }
+        
+        .file-tree li.folder:before {
+            content: "📂 ";
+        }
+        
+        footer {
+            text-align: center;
+            margin-top: 3rem;
+            padding: 2rem 0;
+            background-color: var(--dark);
+            color: white;
+        }
+        
+        @media (max-width: 768px) {
+            .component-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            h1 {
+                font-size: 2rem;
+            }
+            
+            h2 {
+                font-size: 1.75rem;
+            }
+            
+            .task-visualization {
+                grid-template-columns: 1fr;
+            }
+            
+            .tabs {
+                flex-direction: column;
+            }
+            
+            .tab {
+                margin-bottom: 5px;
+                border-radius: 5px;
+            }
+            
+            .tab.active {
+                border: 1px solid var(--border);
+                border-radius: 5px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <h1>Agentic Toolkit - Complete Implementation</h1>
+            <p>Works with global CLI, Cline, and VS Code Cursor</p>
+        </div>
+    </header>
+
+    <div class="container">
+        <div class="tabs">
+            <div class="tab active" onclick="switchTab('cli')">CLI Interface</div>
+            <div class="tab" onclick="switchTab('tasks')">Task Visualization</div>
+            <div class="tab" onclick="switchTab('structure')">Project Structure</div>
+            <div class="tab" onclick="switchTab('integration')">Integration</div>
+            <div class="tab" onclick="switchTab('docs')">Documentation</div>
+        </div>
+        
+        <div id="cli-tab" class="tab-content active">
+            <h2>Agentic Toolkit CLI</h2>
+            <p>Try out the Agentic Toolkit commands in this simulated terminal. Type 'help' to see available commands.</p>
+            
+            <div class="terminal">
+                <div class="terminal-header">
+                    <div>Agentic Toolkit CLI v2.0.0</div>
+                    <div>● ● ●</div>
+                </div>
+                
+                <div id="terminal-output">
+                    <div class="response">Agentic Toolkit initialized. Type 'help' to see available commands.</div>
+                    <div class="cmd">user@dev:~$ agentic init my-project</div>
+                    <div class="response success">✅ Project 'my-project' initialized with default structure</div>
+                    <div class="cmd">user@dev:~$ cd my-project</div>
+                    <div class="response success">✅ Changed directory to my-project</div>
+                </div>
+                
+                <div class="terminal-input">
+                    <span class="terminal-prompt">user@dev:~/my-project$</span>
+                    <input type="text" id="command-input" placeholder="Enter command..." autofocus>
+                </div>
+            </div>
+        </div>
+        
+        <div id="tasks-tab" class="tab-content">
+            <h2>Task Visualization</h2>
+            <p>Current project tasks and their dependencies. Tasks are color-coded by status and priority.</p>
+            
+            <div class="task-visualization">
+                <div class="task-node completed">
+                    <div class="task-title">Initialize Project</div>
+                    <div class="task-meta">Status: Completed</div>
+                    <div class="task-meta">Priority: High</div>
+                    <div class="task-meta">Dependencies: None</div>
+                </div>
+                
+                <div class="task-node">
+                    <div class="task-title">Create PRD</div>
+                    <div class="task-meta">Status: In Progress</div>
+                    <div class="task-meta">Priority: High</div>
+                    <div class="task-meta">Dependencies: Initialize Project</div>
+                </div>
+                
+                <div class="task-node">
+                    <div class="task-title">Setup Backend</div>
+                    <div class="task-meta">Status: Pending</div>
+                    <div class="task-meta">Priority: Medium</div>
+                    <div class="task-meta">Dependencies: Create PRD</div>
+                </div>
+                
+                <div class="task-node">
+                    <div class="task-title">Design UI</div>
+                    <div class="task-meta">Status: Pending</div>
+                    <div class="task-meta">Priority: Medium</div>
+                    <div class="task-meta">Dependencies: Create PRD</div>
+                </div>
+                
+                <div class="task-node high-priority">
+                    <div class="task-title">Implement Auth</div>
+                    <div class="task-meta">Status: Pending</div>
+                    <div class="task-meta">Priority: High</div>
+                    <div class="task-meta">Dependencies: Setup Backend</div>
+                </div>
+                
+                <div class="task-node">
+                    <div class="task-title">Testing</div>
+                    <div class="task-meta">Status: Pending</div>
+                    <div class="task-meta">Priority: Medium</div>
+                    <div class="task-meta">Dependencies: Implement Auth, Design UI</div>
+                </div>
+            </div>
+            
+            <div class="card">
+                <div class="card-header">
+                    <h3>Task Analytics</h3>
+                </div>
+                <p><strong>Project Progress:</strong> 16% complete</p>
+                <p><strong>Tasks:</strong> 6 total, 1 completed, 1 in progress, 4 pending</p>
+                <p><strong>Estimated Completion:</strong> 12-16 hours</p>
+                <p><strong>Complexity Score:</strong> Medium (3.2/5)</p>
+            </div>
+        </div>
+        
+        <div id="structure-tab" class="tab-content">
+            <h2>Project Structure</h2>
+            <p>The complete file structure of the Agentic Toolkit implementation.</p>
+            
+            <div class="file-tree">
+                agentic-toolkit/
+                <ul>
+                    <li class="folder">bin/
+                        <ul>
+                            <li>agentic-toolkit.js</li>
+                        </ul>
+                    </li>
+                    <li class="folder">lib/
+                        <ul>
+                            <li>prd-generator.js</li>
+                            <li>task-parser.js</li>
+                            <li>dependency-graph.js</li>
+                            <li>complexity-analyzer.js</li>
+                            <li>ai-integration.js</li>
+                            <li>task-manager.js</li>
+                            <li>rules-engine.js</li>
+                            <li>auto-executor.js</li>
+                            <li>cli-interface.js</li>
+                            <li>vscode-integration.js</li>
+                            <li>cline-adapter.js</li>
+                        </ul>
+                    </li>
+                    <li class="folder">config/
+                        <ul>
+                            <li>.env.example</li>
+                            <li>cursor-rules.json</li>
+                            <li>provider-config.json</li>
+                            <li>vscode-settings.json</li>
+                        </ul>
+                    </li>
+                    <li class="folder">templates/
+                        <ul>
+                            <li>plan.md</li>
+                            <li>prd-template.md</li>
+                            <li>task-template.json</li>
+                            <li>vscode-snippet.json</li>
+                        </ul>
+                    </li>
+                    <li class="folder">scripts/
+                        <ul>
+                            <li>plan.sh</li>
+                            <li>switch-openrouter.sh</li>
+                            <li>switch-ollama.sh</li>
+                            <li>init-project.sh</li>
+                            <li>install-global.sh</li>
+                            <li>setup-vscode.sh</li>
+                        </ul>
+                    </li>
+                    <li class="folder">.github/
+                        <ul>
+                            <li class="folder">workflows/
+                                <ul>
+                                    <li>publish.yml</li>
+                                    <li>release.yml</li>
+                                    <li>test.yml</li>
+                                </ul>
+                            </li>
+                        </ul>
+                    </li>
+                    <li>.gitignore</li>
+                    <li>package.json</li>
+                    <li>README.md</li>
+                    <li>LICENSE</li>
+                    <li>CHANGELOG.md</li>
+                    <li>CONTRIBUTING.md</li>
+                </ul>
+            </div>
+        </div>
+        
+        <div id="integration-tab" class="tab-content">
+            <h2>Integration with CLI, Cline, and VS Code Cursor</h2>
+            <p>The Agentic Toolkit is designed to work seamlessly across different environments.</p>
+            
+            <div class="card">
+                <div class="card-header">
+                    <h3><span class="step-number">1</span> Global CLI Installation</h3>
+                </div>
+                <p><strong>Installation:</strong> The toolkit can be installed globally via npm.</p>
+                <pre><code>npm install -g agentic-toolkit</code></pre>
+                <p><strong>Usage:</strong> Once installed, you can use it from any directory.</p>
+                <pre><code># Initialize a new project
+agentic init my-project
+
+# Generate tasks from PRD
+agentic plan
+
+# Analyze task complexity
+agentic analyze</code></pre>
+            </div>
+            
+            <div class="card">
+                <div class="card-header">
+                    <h3><span class="step-number">2</span> VS Code Cursor Integration</h3>
+                </div>
+                <p><strong>Setup:</strong> The toolkit includes a VS Code extension for seamless integration.</p>
+                <pre><code>// .vscode/settings.json
+{
+  "agentic.enable": true,
+  "agentic.autoPlan": true,
+  "agentic.provider": "openrouter",
+  "agentic.model": "anthropic/claude-3.5-sonnet"
+}</code></pre>
+                <p><strong>Usage:</strong> Right-click on a PRD file and select "Generate Tasks" or use the command palette.</p>
+                <pre><code>// Command palette options
+Agentic: Plan Project
+Agentic: Analyze Complexity
+Agentic: Show Next Task
+Agentic: Auto Run Mode</code></pre>
+            </div>
+            
+            <div class="card">
+                <div class="card-header">
+                    <h3><span class="step-number">3</span> Cline Integration</h3>
+                </div>
+                <p><strong>Setup:</strong> The toolkit provides an adapter for Cline integration.</p>
+                <pre><code>// cline integration example
+const { ClineIntegration } = require('agentic-toolkit/lib/cline-adapter');
+
+const cline = new ClineIntegration();
+cline.setup({
+  apiKey: process.env.OPENROUTER_API_KEY,
+  model: 'anthropic/claude-3.5-sonnet'
+});</code></pre>
+                <p><strong>Usage:</strong> Cline can call Agentic Toolkit functions directly.</p>
+                <pre><code>// Example Cline command
+/user: I want to build a notes app with authentication
+/cline: @agentic generate-prd "notes app with authentication"
+/agentic: ✅ PRD generated. Use `agentic plan` to create tasks.</code></pre>
+            </div>
+        </div>
+        
+        <div id="docs-tab" class="tab-content">
+            <h2>Agentic Toolkit Implementation</h2>
+            <p>Complete implementation that works with global CLI, Cline, and VS Code Cursor.</p>
+
+            <div class="card">
+                <div class="card-header">
+                    <h3><span class="step-number">1</span> Core Components</h3>
+                </div>
+                <p><strong>Complete Taskmaster Replacement:</strong> All Taskmaster features implemented in Agentic Toolkit.</p>
+                <p><strong>What's implemented:</strong></p>
+                <ul>
+                    <li>CLI tool with global installation and command parsing</li>
+                    <li>PRD generation and parsing system</li>
+                    <li>Task management with dependencies and priorities</li>
+                    <li>Complexity analysis with AI integration</li>
+                    <li>Task expansion into subtasks</li>
+                    <li>Dynamic task updating</li>
+                    <li>AI agent integration</li>
+                    <li>Rules engine for coding constraints</li>
+                    <li>Auto-run execution mode</li>
+                </ul>
+            </div>
+
+            <div class="card">
+                <div class="card-header">
+                    <h3><span class="step-number">2</span> Integration Features</h3>
+                </div>
+                <p><strong>Multi-Environment Support:</strong> Works with CLI, Cline, and VS Code Cursor.</p>
+                <p><strong>Integration Points:</strong></p>
+                <ul>
+                    <li>Global npm package for CLI usage</li>
+                    <li>VS Code extension for editor integration</li>
+                    <li>Cline adapter for AI assistant integration</li>
+                    <li>REST API for remote calls</li>
+                    <li>WebSocket support for real-time updates</li>
+                    <li>Configuration management for all environments</li>
+                </ul>
+            </div>
+
+            <h2>Key Configuration Files</h2>
+            
+            <div class="card">
+                <div class="card-header">
+                    <h4>package.json</h4>
+                </div>
+                <pre><code>{
+  "name": "agentic-toolkit",
+  "version": "2.0.0",
+  "description": "Complete AI-powered task management system",
+  "bin": {
+    "agentic": "./bin/agentic-toolkit.js"
+  },
+  "main": "./lib/index.js",
+  "dependencies": {
+    "commander": "^9.4.1",
+    "inquirer": "^8.2.5",
+    "dotenv": "^16.0.3",
+    "axios": "^1.2.2",
+    "chalk": "^4.1.2",
+    "graph-data-structure": "^2.0.0",
+    "ws": "^8.13.0",
+    "express": "^4.18.2"
+  },
+  "keywords": ["ai", "task", "management", "agentic", "automation", "cli", "vscode", "cline"],
+  "license": "MIT"
+}</code></pre>
+            </div>
+            
+            <div class="card">
+                <div class="card-header">
+                    <h4>bin/agentic-toolkit.js</h4>
+                </div>
+                <pre><code>#!/usr/bin/env node
+
+const { program } = require('commander');
+const { initProject } = require('../lib/project-initializer');
+const { generatePRD } = require('../lib/prd-generator');
+const { planTasks } = require('../lib/task-parser');
+const { analyzeComplexity } = require('../lib/complexity-analyzer');
+const { listTasks, getNextTask } = require('../lib/task-manager');
+
+program
+  .version('2.0.0')
+  .description('Agentic Toolkit - AI-powered task management system');
+
+program
+  .command('init <project-name>')
+  .description('Initialize a new project')
+  .action((projectName) => {
+    initProject(projectName);
+  });
+
+program
+  .command('prd <description>')
+  .description('Generate PRD from description')
+  .action((description) => {
+    generatePRD(description);
+  });
+
+program
+  .command('plan')
+  .description('Generate tasks from PRD')
+  .action(() => {
+    planTasks();
+  });
+
+program
+  .command('analyze')
+  .description('Analyze task complexity')
+  .action(() => {
+    analyzeComplexity();
+  });
+
+program
+  .command('list')
+  .description('List all tasks')
+  .action(() => {
+    listTasks();
+  });
+
+program
+  .command('next')
+  .description('Show the next task to complete')
+  .action(() => {
+    getNextTask();
+  });
+
+program.parse(process.argv);</code></pre>
+            </div>
+            
+            <div class="card">
+                <div class="card-header">
+                    <h4>lib/vscode-integration.js</h4>
+                </div>
+                <pre><code>const vscode = require('vscode');
+const { planTasks } = require('./task-parser');
+const { analyzeComplexity } = require('./complexity-analyzer');
+
+class VSCodeIntegration {
+  constructor() {
+    this.statusBarItem = vscode.window.createStatusBarItem(
+      vscode.StatusBarAlignment.Right, 100
+    );
+    this.statusBarItem.text = 'Agentic';
+    this.statusBarItem.tooltip = 'Agentic Toolkit';
+    this.statusBarItem.show();
+  }
+
+  activate(context) {
+    // Register commands
+    const planCommand = vscode.commands.registerCommand(
+      'agentic.plan', 
+      () => this.handlePlanCommand()
+    );
+    
+    const analyzeCommand = vscode.commands.registerCommand(
+      'agentic.analyze',
+      () => this.handleAnalyzeCommand()
+    );
+    
+    const nextTaskCommand = vscode.commands.registerCommand(
+      'agentic.nextTask',
+      () => this.handleNextTaskCommand()
+    );
+
+    context.subscriptions.push(planCommand, analyzeCommand, nextTaskCommand);
+  }
+
+  async handlePlanCommand() {
+    const document = vscode.window.activeTextEditor?.document;
+    if (document && document.languageId === 'markdown') {
+      const prdContent = document.getText();
+      try {
+        const tasks = await planTasks(prdContent);
+        vscode.window.showInformationMessage(
+          `Generated ${tasks.length} tasks from PRD`
+        );
+      } catch (error) {
+        vscode.window.showErrorMessage(
+          `Failed to generate tasks: ${error.message}`
+        );
+      }
+    }
+  }
+
+  async handleAnalyzeCommand() {
+    try {
+      const complexity = await analyzeComplexity();
+      vscode.window.showInformationMessage(
+        `Task complexity analyzed: ${complexity.score}/5`
+      );
+    } catch (error) {
+      vscode.window.showErrorMessage(
+        `Failed to analyze complexity: ${error.message}`
+      );
+    }
+  }
+
+  async handleNextTaskCommand() {
+    try {
+      const nextTask = await getNextTask();
+      vscode.window.showInformationMessage(
+        `Next task: ${nextTask.title} (Priority: ${nextTask.priority})`
+      );
+    } catch (error) {
+      vscode.window.showErrorMessage(
+        `Failed to get next task: ${error.message}`
+      );
+    }
+  }
+}
+
+module.exports = { VSCodeIntegration };</code></pre>
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        <div class="container">
+            <p>Agentic Toolkit - Complete Implementation for CLI, Cline, and VS Code Cursor</p>
+        </div>
+    </footer>
+
+    <script>
+        // Tab switching functionality
+        function switchTab(tabName) {
+            document.querySelectorAll('.tab').forEach(tab => {
+                tab.classList.remove('active');
+            });
+            
+            document.querySelectorAll('.tab-content').forEach(content => {
+                content.classList.remove('active');
+            });
+            
+            const tabIndex = {'cli': 1, 'tasks': 2, 'structure': 3, 'integration': 4, 'docs': 5};
+            document.querySelector(`.tab:nth-child(${tabIndex[tabName]})`).classList.add('active');
+            document.getElementById(`${tabName}-tab`).classList.add('active');
+        }
+        
+        // CLI functionality
+        const commandInput = document.getElementById('command-input');
+        const terminalOutput = document.getElementById('terminal-output');
+        
+        const commands = {
+            'help': 'Show available commands',
+            'init [project]': 'Initialize a new project',
+            'prd [description]': 'Generate PRD from description',
+            'plan': 'Generate tasks from PRD',
+            'next': 'Show the next task to complete',
+            'analyze': 'Analyze task complexity',
+            'list': 'List all tasks',
+            'update': 'Update a task',
+            'run': 'Execute tasks',
+            'provider [name]': 'Switch AI provider',
+            'config': 'Show configuration',
+            'clear': 'Clear terminal',
+            'exit': 'Exit the terminal'
+        };
+        
+        commandInput.addEventListener('keydown', function(e) {
+            if (e.key === 'Enter') {
+                const command = this.value.trim();
+                this.value = '';
+                
+                // Add the command to output
+                const cmdElement = document.createElement('div');
+                cmdElement.className = 'cmd';
+                cmdElement.textContent = `user@dev:~/my-project$ ${command}`;
+                terminalOutput.appendChild(cmdElement);
+                
+                // Process the command
+                processCommand(command);
+                
+                // Scroll to bottom
+                terminalOutput.parentElement.scrollTop = terminalOutput.parentElement.scrollHeight;
+            }
+        });
+        
+        function processCommand(command) {
+            const response = document.createElement('div');
+            response.className = 'response';
+            
+            if (!command) {
+                response.textContent = 'Please enter a command. Type "help" for available commands.';
+                terminalOutput.appendChild(response);
+                return;
+            }
+            
+            const parts = command.split(' ');
+            const cmd = parts[0].toLowerCase();
+            const args = parts.slice(1);
+            
+            switch(cmd) {
+                case 'help':
+                    response.innerHTML = '<strong>Available commands:</strong><br>';
+                    for (const [cmd, desc] of Object.entries(commands)) {
+                        response.innerHTML += `<code>${cmd}</code> - ${desc}<br>`;
+                    }
+                    break;
+                    
+                case 'init':
+                    if (args.length === 0) {
+                        response.textContent = 'Usage: init [project-name]';
+                    } else {
+                        response.className = 'response success';
+                        response.textContent = `✅ Project '${args[0]}' initialized with default structure`;
+                    }
+                    break;
+                    
+                case 'prd':
+                    if (args.length === 0) {
+                        response.textContent = 'Usage: prd [project-description]';
+                    } else {
+                        response.className = 'response success';
+                        response.innerHTML = `✅ PRD generated from description<br>
+                                             ↳ Saved to prd.md<br>
+                                             ↳ 5 main features identified`;
+                    }
+                    break;
+                    
+                case 'plan':
+                    response.className = 'response success';
+                    response.innerHTML = `✅ Generated tasks from PRD<br>
+                                         ↳ Found 6 tasks<br>
+                                         ↳ Identified 3 dependencies<br>
+                                         ↳ High priority tasks: 2`;
+                    break;
+                    
+                case 'next':
+                    response.innerHTML = `<strong>Next task:</strong> Create PRD<br>
+                                         <strong>Priority:</strong> High<br>
+                                         <strong>Dependencies:</strong> Initialize Project (completed)`;
+                    break;
+                    
+                case 'analyze':
+                    response.innerHTML = `<strong>Complexity Analysis:</strong><br>
+                                         ↳ Average complexity: Medium (3.2/5)<br>
+                                         ↳ Most complex: Implement Auth (4.5/5)<br>
+                                         ↳ Recommendations: Break down "Implement Auth" into subtasks`;
+                    break;
+                    
+                case 'list':
+                    response.innerHTML = `<strong>Task List:</strong><br>
+                                         1. [✓] Initialize Project<br>
+                                         2. [→] Create PRD (In Progress)<br>
+                                         3. [ ] Setup Backend<br>
+                                         4. [ ] Design UI<br>
+                                         5. [ ] Implement Auth (High Priority)<br>
+                                         6. [ ] Testing`;
+                    break;
+                    
+                case 'update':
+                    response.className = 'response success';
+                    response.textContent = '✅ Task updated successfully. Dependencies recalculated.';
+                    break;
+                    
+                case 'run':
+                    response.innerHTML = `<strong>Auto Run Mode:</strong> Starting task execution...<br>
+                                         ↳ Executing: Create PRD<br>
+                                         ↳ Status: In progress (10%)<br>
+                                         ↳ Estimated time: 15 minutes`;
+                    break;
+                    
+                case 'provider':
+                    if (args.length === 0) {
+                        response.textContent = 'Current provider: openrouter';
+                    } else {
+                        response.className = 'response success';
+                        response.textContent = `✅ Switched to provider: ${args[0]}`;
+                    }
+                    break;
+                    
+                case 'config':
+                    response.innerHTML = `<strong>Current Configuration:</strong><br>
+                                         ↳ Provider: openrouter<br>
+                                         ↳ Model: claude-3.5-sonnet<br>
+                                         ↳ Auto-run: disabled<br>
+                                         ↳ Complexity threshold: 3`;
+                    break;
+                    
+                case 'clear':
+                    terminalOutput.innerHTML = '';
+                    return;
+                    
+                case 'exit':
+                    response.textContent = 'Exiting terminal. Goodbye!';
+                    break;
+                    
+                default:
+                    response.className = 'response error';
+                    response.textContent = `Command not found: ${cmd}. Type "help" for available commands.`;
+            }
+            
+            terminalOutput.appendChild(response);
+        }
+    </script>
+</body>
+</html>
