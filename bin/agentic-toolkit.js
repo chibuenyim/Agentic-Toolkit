@@ -83,8 +83,8 @@ async function handleInit(projectName) {
     process.exit(1);
   }
 
-  console.log(`🤖 Initializing project: ${projectName}`);
-  console.log("📦 Setting up project structure...");
+  console.log(`Initializing project: ${projectName}`);
+  console.log("Setting up project structure...");
 
   // This would call the init-project.sh script
   const { execSync } = await import('child_process');
@@ -99,27 +99,27 @@ async function handleInit(projectName) {
 }
 
 async function handlePlan() {
-  console.log("🛠️ Generating agent-optimized tasks...");
+  console.log("Generating agent-optimized tasks...");
 
   const planPath = path.resolve(process.cwd(), "plan.md");
 
   try {
     const planContent = readFileSync(planPath, "utf-8");
-    console.log("🤖 Agentic Planning: Analyzing project requirements...");
+    console.log("Agentic Planning: Analyzing project requirements...");
 
     // Enhanced agent-optimized task generation
     const tasks = generateAgentTasks(planContent);
 
     writeFileSync(path.resolve(process.cwd(), "tasks.json"), JSON.stringify(tasks, null, 2));
 
-    console.log("✅ Generated agent-optimized tasks.json");
-    console.log(`📊 Total Tasks: ${tasks.execution_summary.total_tasks}`);
-    console.log(`⏱️  Estimated Duration: ${tasks.execution_summary.estimated_duration_days} days`);
-    console.log(`🤖 Agent Types: ${tasks.metadata.agent_capabilities.join(', ')}`);
-    console.log(`🔄 Parallel Execution Ratio: ${(tasks.execution_summary.parallel_execution_ratio * 100).toFixed(0)}%`);
+    console.log("Generated agent-optimized tasks.json");
+    console.log(`Total Tasks: ${tasks.execution_summary.total_tasks}`);
+    console.log(`Estimated Duration: ${tasks.execution_summary.estimated_duration_days} days`);
+    console.log(`Agent Types: ${tasks.metadata.agent_capabilities.join(', ')}`);
+    console.log(`Parallel Execution Ratio: ${(tasks.execution_summary.parallel_execution_ratio * 100).toFixed(0)}%`);
 
   } catch (error) {
-    console.error("❌ Error generating tasks:", error.message);
+    console.error("Error generating tasks:", error.message);
     console.log("Make sure plan.md exists in the current directory");
   }
 }
@@ -130,24 +130,24 @@ async function handleNext() {
   const nextTask = taskManager.getNextTask();
 
   if (nextTask) {
-    console.log("🎯 Next Task to Execute:");
-    console.log(`📝 Title: ${nextTask.title}`);
-    console.log(`⭐ Priority: ${nextTask.priority}`);
-    console.log(`🤖 Agent Type: ${nextTask.agent_type}`);
-    console.log(`⏱️  Estimated Hours: ${nextTask.estimated_hours}`);
-    console.log(`📋 Description: ${nextTask.description}`);
+    console.log("Next Task to Execute:");
+    console.log(`Title: ${nextTask.title}`);
+    console.log(`Priority: ${nextTask.priority}`);
+    console.log(`Agent Type: ${nextTask.agent_type}`);
+    console.log(`Estimated Hours: ${nextTask.estimated_hours}`);
+    console.log(`Description: ${nextTask.description}`);
 
     if (nextTask.dependencies && nextTask.dependencies.length > 0) {
-      console.log(`🔗 Dependencies: ${nextTask.dependencies.join(', ')}`);
+      console.log(`Dependencies: ${nextTask.dependencies.join(', ')}`);
     }
 
     if (nextTask.execution_context) {
-      console.log(`🛠️  Tech Stack: ${nextTask.execution_context.tech_stack?.join(', ') || 'General'}`);
+      console.log(`Tech Stack: ${nextTask.execution_context.tech_stack?.join(', ') || 'General'}`);
     }
   } else {
-    console.log("✅ No pending tasks found!");
+    console.log("No pending tasks found.");
     const stats = taskManager.getTaskStats();
-    console.log(`📊 Project Status: ${stats.completionRate}% complete`);
+    console.log(`Project Status: ${stats.completionRate}% complete`);
   }
 }
 
@@ -157,17 +157,17 @@ async function handleList() {
   const tasks = taskManager.tasks;
   const stats = taskManager.getTaskStats();
 
-  console.log(`📋 Task List (${tasks.length} total tasks):`);
-  console.log(`📊 Progress: ${stats.completed}/${stats.total} completed (${stats.completionRate}%)\n`);
+  console.log(`Task List (${tasks.length} total tasks):`);
+  console.log(`Progress: ${stats.completed}/${stats.total} completed (${stats.completionRate}%)\n`);
 
   tasks.forEach((task, index) => {
-    const status = task.status === 'completed' ? '✅' :
-                  task.status === 'in_progress' ? '🔄' : '⏳';
-    const priority = task.priority === 'critical' ? '🔴' :
-                    task.priority === 'high' ? '🟠' : '🟢';
+    const status = task.status === 'completed' ? '[DONE]' :
+                  task.status === 'in_progress' ? '[WORK]' : '[PEND]';
+    const priority = task.priority === 'critical' ? '[CRIT]' :
+                    task.priority === 'high' ? '[HIGH]' : '[NORM]';
 
     console.log(`${index + 1}. ${status} ${priority} ${task.title}`);
-    console.log(`   🤖 ${task.agent_type} | ⏱️ ${task.estimated_hours}h | 📍 ${task.phase || 'General'}`);
+    console.log(`   Agent: ${task.agent_type} | Hours: ${task.estimated_hours}h | Phase: ${task.phase || 'General'}`);
   });
 }
 
@@ -175,20 +175,20 @@ async function handleAnalyze() {
   taskManager.loadTasks();
 
   if (taskManager.tasks.length === 0) {
-    console.log("❌ No tasks found. Run 'agentic plan' first.");
+    console.log("No tasks found. Run 'agentic plan' first.");
     return;
   }
 
-  console.log("📊 Analyzing task complexity...");
+  console.log("Analyzing task complexity...");
   const analysis = await complexityAnalyzer.analyze(taskManager.tasks);
 
-  console.log(`\n🎯 Complexity Analysis Results:`);
-  console.log(`📈 Average Complexity: ${analysis.score}/5 (${analysis.level})`);
-  console.log(`📋 Total Tasks: ${analysis.analysis.totalTasks}`);
-  console.log(`⭐ High Priority Tasks: ${analysis.analysis.highPriorityTasks}`);
-  console.log(`⚠️  Complex Tasks: ${analysis.analysis.complexTasks.length}`);
+  console.log(`\nComplexity Analysis Results:`);
+  console.log(`Average Complexity: ${analysis.score}/5 (${analysis.level})`);
+  console.log(`Total Tasks: ${analysis.analysis.totalTasks}`);
+  console.log(`High Priority Tasks: ${analysis.analysis.highPriorityTasks}`);
+  console.log(`Complex Tasks: ${analysis.analysis.complexTasks.length}`);
 
-  console.log(`\n💡 Recommendations:`);
+  console.log(`\nRecommendations:`);
   analysis.recommendations.forEach((rec, index) => {
     console.log(`   ${index + 1}. ${rec}`);
   });
@@ -196,7 +196,7 @@ async function handleAnalyze() {
 
 async function handleUpdate(taskId, status) {
   if (!taskId || !status) {
-    console.error("❌ Usage: agentic update <task-id> <status>");
+    console.error("Usage: agentic update <task-id> <status>");
     console.error("   Status options: pending, in_progress, completed");
     return;
   }
@@ -204,11 +204,11 @@ async function handleUpdate(taskId, status) {
   const success = taskManager.updateTaskStatus(taskId, status);
 
   if (success) {
-    console.log(`✅ Task ${taskId} updated to ${status}`);
+    console.log(`Task ${taskId} updated to ${status}`);
     const stats = taskManager.getTaskStats();
-    console.log(`📊 Project Progress: ${stats.completionRate}% complete`);
+    console.log(`Project Progress: ${stats.completionRate}% complete`);
   } else {
-    console.error(`❌ Task ${taskId} not found`);
+    console.error(`Task ${taskId} not found`);
   }
 }
 
@@ -223,13 +223,13 @@ async function handleProvider(provider) {
     return;
   }
 
-  console.log(`🔄 Switching to provider: ${provider}`);
+  console.log(`Switching to provider: ${provider}`);
   // Provider switching logic would go here
-  console.log(`✅ Switched to ${provider} provider`);
+  console.log(`Switched to ${provider} provider`);
 }
 
 async function handleConfig() {
-  console.log("⚙️ Current Configuration:");
+  console.log("Current Configuration:");
   console.log(`   Provider: ${process.env.PROVIDER || 'openrouter'}`);
   console.log(`   Model: ${process.env.MODEL || 'anthropic/claude-3.5-sonnet'}`);
   console.log(`   Auto-run: ${process.env.AUTO_RUN || 'false'}`);
@@ -238,11 +238,11 @@ async function handleConfig() {
 
 async function handleRules(filePath) {
   if (!filePath) {
-    console.log("🔍 Running rules check on current project...");
+    console.log("Running rules check on current project...");
     const violations = rulesEngine.validateProject(process.cwd());
 
-    console.log(`\n📋 Rules Check Results:`);
-    console.log(`📊 Total Violations: ${violations.length}`);
+    console.log(`\nRules Check Results:`);
+    console.log(`Total Violations: ${violations.length}`);
 
     const bySeverity = {
       critical: violations.filter(v => v.severity === 'critical').length,
@@ -251,28 +251,28 @@ async function handleRules(filePath) {
       low: violations.filter(v => v.severity === 'low').length
     };
 
-    console.log(`🔴 Critical: ${bySeverity.critical}`);
-    console.log(`🟠 High: ${bySeverity.high}`);
-    console.log(`🟡 Medium: ${bySeverity.medium}`);
-    console.log(`🟢 Low: ${bySeverity.low}`);
+    console.log(`Critical: ${bySeverity.critical}`);
+    console.log(`High: ${bySeverity.high}`);
+    console.log(`Medium: ${bySeverity.medium}`);
+    console.log(`Low: ${bySeverity.low}`);
 
     if (violations.length > 0) {
-      console.log(`\n⚠️ Top Violations:`);
+      console.log(`\nTop Violations:`);
       violations.slice(0, 5).forEach((v, index) => {
         console.log(`   ${index + 1}. ${v.ruleName} (${v.severity}) in ${path.basename(v.file)}`);
       });
     }
 
     const compliance = rulesEngine.generateComplianceReport();
-    console.log(`\n🏆 Compliance Status: ${compliance.compliance.overall}`);
+    console.log(`\nCompliance Status: ${compliance.compliance.overall}`);
   } else {
-    console.log(`🔍 Checking rules for file: ${filePath}`);
+    console.log(`Checking rules for file: ${filePath}`);
     const violations = rulesEngine.validateFile(path.resolve(process.cwd(), filePath));
 
     if (violations.length === 0) {
-      console.log("✅ No rule violations found!");
+      console.log("No rule violations found.");
     } else {
-      console.log(`⚠️ Found ${violations.length} violations:`);
+      console.log(`Found ${violations.length} violations:`);
       violations.forEach((v, index) => {
         console.log(`   ${index + 1}. ${v.ruleName} (${v.severity}): ${v.description}`);
       });
@@ -299,8 +299,8 @@ async function handleAuto(options) {
     }
   }
 
-  console.log("🤖 Starting Auto Execution Mode...");
-  console.log(`⚙️ Configuration: ${JSON.stringify(parsedOptions, null, 2)}`);
+  console.log("Starting Auto Execution Mode...");
+  console.log(`Configuration: ${JSON.stringify(parsedOptions, null, 2)}`);
 
   try {
     await autoExecutor.startAutoExecution({
@@ -317,54 +317,54 @@ async function handleAuto(options) {
 
 function showHelp() {
   console.log(`
-🤖 Agentic Toolkit v2.0 - Enterprise AI-Powered Development Assistant
+Agentic Toolkit v2.0 - Enterprise AI-Powered Development Platform
 
 Usage: agentic <command> [options]
 
 Project Management:
   init <name>     Initialize a new project with Agentic Toolkit
   plan            Generate agent-optimized tasks from plan.md
-  next            Show the next task to execute
-  list            List all tasks with status and priority
+  next            Display the next executable task
+  list            Display all tasks with status and priority information
   update <id> <status>  Update task status (pending/in_progress/completed)
 
 Analysis & Intelligence:
-  analyze         Analyze task complexity and provide recommendations
-  rules [file]    Run enterprise coding standards and security checks
+  analyze         Perform task complexity analysis and provide optimization recommendations
+  rules [file]    Execute enterprise coding standards and security compliance checks
 
 Automation & Execution:
-  auto [options]  Start automated task execution mode
-    --parallel    Execute tasks in parallel when possible
-    --max-iterations <n>  Maximum execution iterations (default: 50)
-    --delay <ms>   Delay between tasks in milliseconds (default: 3000)
-    --no-rules     Skip rules validation during execution
+  auto [options]  Initiate automated task execution mode
+    --parallel           Enable parallel task execution when dependencies allow
+    --max-iterations <n> Set maximum execution iterations (default: 50)
+    --delay <ms>         Configure delay between tasks in milliseconds (default: 3000)
+    --no-rules           Bypass rules validation during execution
 
 Configuration:
-  provider [name] Switch or show current AI provider
-  config          Show current configuration
+  provider [name] Switch or display current AI provider configuration
+  config          Display current system configuration
 
-Help & Examples:
-  example         Show sample plan.md template
-  help            Show this help message
+Documentation:
+  example         Display sample project plan template
+  help            Display this help information
 
-Examples:
-  agentic init my-awesome-app
+Usage Examples:
+  agentic init enterprise-project
   agentic plan
   agentic next
   agentic analyze
   agentic rules src/index.js
-  agentic auto --parallel --max-iterations 10
+  agentic auto --parallel --max-iterations 25
   agentic update task_1 completed
-  agentic provider ollama
+  agentic provider openrouter
 
-Enterprise Features:
-  🔒 Enterprise-grade security and compliance rules
-  🤖 Automated task execution with intelligent scheduling
-  📊 Advanced complexity analysis and recommendations
-  🏗️ Multi-agent architecture with specialized roles
-  📈 Real-time progress tracking and optimization
+Enterprise Capabilities:
+  • Enterprise-grade security and compliance validation
+  • Automated task execution with intelligent scheduling
+  • Advanced complexity analysis and optimization recommendations
+  • Multi-agent architecture with specialized operational roles
+  • Real-time progress tracking and performance optimization
 
-For more information, visit: https://github.com/chibuenyim/Agentic-Toolkit
+For comprehensive documentation, visit: https://github.com/chibuenyim/Agentic-Toolkit
 `);
 }
 
