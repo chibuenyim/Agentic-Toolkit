@@ -34,16 +34,50 @@ and require a separate paid license agreement. These features include:
 - Advanced analytics and reporting
 
 For access to premium features, please contact the maintainers:
-- **Teams**: Contact via Teams (Live ID: chibuenyimezeaka)
-- **Email**: Contact through the project repository issues
+- Teams: Contact via Teams (Live ID: chibuenyimezeaka)
+- Email: Contact through the project repository issues
+
+## Enterprise AI Services
+
+*(Professional AI consulting and development services)*
+
+**AI Strategy & Consulting**
+- AI readiness assessments and gap analysis
+- Use-case prioritization and roadmap development
+- Adoption strategy and change management
+- ROI measurement and success metrics
+
+**Custom AI Model Development**
+- Domain-specific LLM fine-tuning and deployment
+- Predictive models for business intelligence
+- Computer vision solutions for automation
+- NLP models for customer service and content analysis
+
+**AI Integration & Deployment**
+- Embedding AI into existing ERP, CRM, and HR systems
+- Legacy system modernization with AI capabilities
+- API development and microservices architecture
+- Cloud-native AI deployment strategies
+
+**Managed AI Services**
+- 24/7 monitoring and performance optimization
+- Continuous model fine-tuning and updates
+- Automated backup and disaster recovery
+- Compliance auditing and reporting
+
+**AI Training & Enablement**
+- Employee upskilling programs and workshops
+- AI literacy training for executives and teams
+- Best practices and governance frameworks
+- Change management and adoption support
 
 ## Open Core Model
 
 This project follows an Open Core business model where:
-- **Core Features**: Basic functionality is free and open source under MIT
-- **Premium Features**: Advanced capabilities require commercial licensing
-- **Community Contributions**: Welcome for core features
-- **Premium Development**: Handled by the core team with commercial support
+- Core Features: Basic functionality is free and open source under MIT
+- Premium Features: Advanced capabilities require commercial licensing
+- Community Contributions: Welcome for core features
+- Premium Development: Handled by the core team with commercial support
 
 For more information about licensing options, please visit our website or
 contact our sales team.
