@@ -5,6 +5,8 @@ import { fileURLToPath } from "url";
 import dotenv from "dotenv";
 import { TaskManager } from "../lib/task-manager.js";
 import { ComplexityAnalyzer } from "../lib/complexity-analyzer.js";
+import { RulesEngine } from "../lib/rules-engine.js";
+import { AutoExecutor } from "../lib/auto-executor.js";
 import { VSCodeIntegration } from "../lib/vscode-integration.js";
 import { ClineAdapter } from "../lib/cline-adapter.js";
 
@@ -16,6 +18,8 @@ dotenv.config({ path: path.resolve(process.cwd(), ".env") });
 const args = process.argv.slice(2);
 const taskManager = new TaskManager();
 const complexityAnalyzer = new ComplexityAnalyzer();
+const rulesEngine = new RulesEngine();
+const autoExecutor = new AutoExecutor();
 const vscodeIntegration = new VSCodeIntegration();
 const clineAdapter = new ClineAdapter();
 
@@ -52,6 +56,12 @@ async function main() {
         break;
       case 'provider':
         await handleProvider(args[1]);
+        break;
+      case 'rules':
+        await handleRules(args[1]);
+        break;
+      case 'auto':
+        await handleAuto(args.slice(1));
         break;
       case 'config':
         await handleConfig();
@@ -226,9 +236,88 @@ async function handleConfig() {
   console.log(`   Complexity Threshold: ${process.env.COMPLEXITY_THRESHOLD || '3'}`);
 }
 
+async function handleRules(filePath) {
+  if (!filePath) {
+    console.log("🔍 Running rules check on current project...");
+    const violations = rulesEngine.validateProject(process.cwd());
+
+    console.log(`\n📋 Rules Check Results:`);
+    console.log(`📊 Total Violations: ${violations.length}`);
+
+    const bySeverity = {
+      critical: violations.filter(v => v.severity === 'critical').length,
+      high: violations.filter(v => v.severity === 'high').length,
+      medium: violations.filter(v => v.severity === 'medium').length,
+      low: violations.filter(v => v.severity === 'low').length
+    };
+
+    console.log(`🔴 Critical: ${bySeverity.critical}`);
+    console.log(`🟠 High: ${bySeverity.high}`);
+    console.log(`🟡 Medium: ${bySeverity.medium}`);
+    console.log(`🟢 Low: ${bySeverity.low}`);
+
+    if (violations.length > 0) {
+      console.log(`\n⚠️ Top Violations:`);
+      violations.slice(0, 5).forEach((v, index) => {
+        console.log(`   ${index + 1}. ${v.ruleName} (${v.severity}) in ${path.basename(v.file)}`);
+      });
+    }
+
+    const compliance = rulesEngine.generateComplianceReport();
+    console.log(`\n🏆 Compliance Status: ${compliance.compliance.overall}`);
+  } else {
+    console.log(`🔍 Checking rules for file: ${filePath}`);
+    const violations = rulesEngine.validateFile(path.resolve(process.cwd(), filePath));
+
+    if (violations.length === 0) {
+      console.log("✅ No rule violations found!");
+    } else {
+      console.log(`⚠️ Found ${violations.length} violations:`);
+      violations.forEach((v, index) => {
+        console.log(`   ${index + 1}. ${v.ruleName} (${v.severity}): ${v.description}`);
+      });
+    }
+  }
+}
+
+async function handleAuto(options) {
+  const parsedOptions = {};
+
+  // Parse options
+  for (let i = 0; i < options.length; i++) {
+    const option = options[i];
+    if (option === '--parallel' || option === '-p') {
+      parsedOptions.parallelExecution = true;
+    } else if (option === '--max-iterations' && options[i + 1]) {
+      parsedOptions.maxIterations = parseInt(options[i + 1]);
+      i++;
+    } else if (option === '--delay' && options[i + 1]) {
+      parsedOptions.delayBetweenTasks = parseInt(options[i + 1]);
+      i++;
+    } else if (option === '--no-rules') {
+      parsedOptions.rulesCheck = false;
+    }
+  }
+
+  console.log("🤖 Starting Auto Execution Mode...");
+  console.log(`⚙️ Configuration: ${JSON.stringify(parsedOptions, null, 2)}`);
+
+  try {
+    await autoExecutor.startAutoExecution({
+      maxIterations: parsedOptions.maxIterations || 50,
+      delayBetweenTasks: parsedOptions.delayBetweenTasks || 3000,
+      rulesCheck: parsedOptions.rulesCheck !== false,
+      parallelExecution: parsedOptions.parallelExecution || false,
+      continueOnError: true
+    });
+  } catch (error) {
+    console.error(`❌ Auto execution failed: ${error.message}`);
+  }
+}
+
 function showHelp() {
   console.log(`
-🤖 Agentic Toolkit v2.0 - AI-Powered Development Assistant
+🤖 Agentic Toolkit v2.0 - Enterprise AI-Powered Development Assistant
 
 Usage: agentic <command> [options]
 
@@ -241,6 +330,14 @@ Project Management:
 
 Analysis & Intelligence:
   analyze         Analyze task complexity and provide recommendations
+  rules [file]    Run enterprise coding standards and security checks
+
+Automation & Execution:
+  auto [options]  Start automated task execution mode
+    --parallel    Execute tasks in parallel when possible
+    --max-iterations <n>  Maximum execution iterations (default: 50)
+    --delay <ms>   Delay between tasks in milliseconds (default: 3000)
+    --no-rules     Skip rules validation during execution
 
 Configuration:
   provider [name] Switch or show current AI provider
@@ -255,8 +352,17 @@ Examples:
   agentic plan
   agentic next
   agentic analyze
-  agentic update 1.1 completed
+  agentic rules src/index.js
+  agentic auto --parallel --max-iterations 10
+  agentic update task_1 completed
   agentic provider ollama
+
+Enterprise Features:
+  🔒 Enterprise-grade security and compliance rules
+  🤖 Automated task execution with intelligent scheduling
+  📊 Advanced complexity analysis and recommendations
+  🏗️ Multi-agent architecture with specialized roles
+  📈 Real-time progress tracking and optimization
 
 For more information, visit: https://github.com/chibuenyim/Agentic-Toolkit
 `);
