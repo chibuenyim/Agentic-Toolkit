@@ -2,6 +2,13 @@
 
 Thank you for your interest in contributing!
 
+## Open Core Contribution Model
+
+This project follows an Open Core model:
+- **Core Features**: Community contributions are welcome and encouraged
+- **Premium Features**: Developed by the core team with commercial licensing
+- **Guidelines**: All contributions must align with the project's open core philosophy
+
 ## How to Contribute
 
 1.  Fork the repository.

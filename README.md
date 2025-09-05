@@ -2,6 +2,25 @@
 
 A global CLI for agentic development with multi-provider AI support (OpenRouter & Ollama).
 
+## 📋 Open Core Model
+
+**Free & Open Source**: Core features are available under MIT License
+**Premium Features**: Advanced capabilities available with commercial licensing
+
+### Core Features (Free)
+- ✅ Basic task planning and breakdown
+- ✅ OpenRouter and Ollama AI provider support
+- ✅ CLI interface for development workflows
+- ✅ Configuration management
+- ✅ Community support
+
+### Premium Features (Commercial License Required)
+- 🔒 Advanced AI integrations
+- 🔒 Enterprise security & compliance
+- 🔒 Priority support
+- 🔒 Custom development
+- 🔒 Extended automation capabilities
+
 ## Installation
 
 ### Global Installation (Recommended)
@@ -107,4 +126,4 @@ Please see [CONTRIBUTING.md](CONTRIBUTING.md) for details on how to contribute t
 
 ## License
 
-This project is licensed under the MIT License - see the LICENSE file for details.
+This project follows an Open Core model - see the LICENSE file for complete licensing details.

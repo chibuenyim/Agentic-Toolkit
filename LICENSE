@@ -1,6 +1,8 @@
-MIT License
+# Agentic Toolkit - Open Core License
 
-Copyright (c) 2025 Agentic Toolkit
+## Core Features License (MIT)
+
+Copyright (c) 2025 Ezeaka Chibuenyim
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
@@ -19,3 +21,28 @@ AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
 LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
+
+## Premium Features License (Commercial)
+
+Premium features of the Agentic Toolkit are licensed under a commercial license
+and require a separate paid license agreement. These features include:
+
+- Advanced AI integrations beyond OpenRouter and Ollama
+- Enterprise-grade security and compliance features
+- Priority support and custom development
+- Extended automation capabilities
+- Advanced analytics and reporting
+
+For access to premium features, please contact the maintainers at
+[contact information] to discuss licensing options.
+
+## Open Core Model
+
+This project follows an Open Core business model where:
+- **Core Features**: Basic functionality is free and open source under MIT
+- **Premium Features**: Advanced capabilities require commercial licensing
+- **Community Contributions**: Welcome for core features
+- **Premium Development**: Handled by the core team with commercial support
+
+For more information about licensing options, please visit our website or
+contact our sales team.
