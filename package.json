@@ -1,15 +1,14 @@
 {
   "name": "agentic-toolkit",
   "version": "1.0.0",
-  "description": "A toolkit for planning app development and breaking down dependencies into hierarchical tasks to minimize errors.",
-  "main": "index.js",
-  "scripts": {
-    "start": "node .",
-    "test": "echo \"Error: no test specified\" && exit 1"
+  "description": "Global CLI bundling TaskMaster with provider switching (OpenRouter & Ollama).",
+  "type": "module",
+  "bin": {
+    "agentic-toolkit": "./bin/agentic-toolkit.js"
   },
-  "keywords": ["planning", "development", "tasks", "dependencies"],
-  "author": "Your Name",
+  "keywords": ["ai", "agentic", "taskmaster", "openrouter", "ollama", "cline"],
   "license": "MIT",
-  "dependencies": {},
-  "devDependencies": {}
+  "dependencies": {
+    "dotenv": "^16.0.0"
+  }
 }

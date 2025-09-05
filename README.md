@@ -1,8 +1,16 @@
-# Agentic Toolkit
+# 🛠️ Agentic Toolkit
 
-A toolkit for planning app development and breaking down dependencies into hierarchical tasks to minimize errors from the initial design phase through to development and deployment.
+A global CLI for agentic development with multi-provider AI support (OpenRouter & Ollama).
 
 ## Installation
+
+### Global Installation (Recommended)
+
+```bash
+npm install -g agentic-toolkit
+```
+
+### Local Development
 
 1. Clone the repository:
    ```bash
@@ -15,36 +23,93 @@ A toolkit for planning app development and breaking down dependencies into hiera
    npm install
    ```
 
+3. Link for development:
+   ```bash
+   npm link
+   ```
+
+## Setup
+
+1. Copy the environment template:
+   ```bash
+   cp config/.env.example .env
+   ```
+
+2. Edit `.env` with your API keys:
+   - For OpenRouter: Add your `OPENROUTER_API_KEY`
+   - For Ollama: Configure the VPS IP and model
+
 ## Usage
 
-Run the toolkit from the root directory:
+### Basic Commands
 
 ```bash
-node .
+# Show usage
+agentic-toolkit
+
+# Generate tasks from plan.md
+agentic-toolkit plan
+
+# Show example plan template
+agentic-toolkit example
 ```
 
-### Commands
-
-- `node . plan <project>` - Create a high-level plan for the project
-- `node . breakdown <task>` - Break down a task into subtasks
-- `node . validate` - Validate dependencies and check for errors
-
-### Examples
+### Provider Switching
 
 ```bash
-# Plan a new project
-node . plan my-app
+# Switch to OpenRouter
+./scripts/switch-openrouter.sh
 
-# Break down a specific task
-node . breakdown "implement authentication"
+# Switch to Ollama
+./scripts/switch-ollama.sh
+```
 
-# Validate current setup
-node . validate
+### Development Workflow
+
+```bash
+# Use the convenience script
+./scripts/plan.sh
+```
+
+## Configuration
+
+The toolkit supports multiple AI providers:
+
+### OpenRouter (Default)
+- Uses Claude 3.5 Sonnet
+- Requires API key
+- Best for production use
+
+### Ollama (Self-hosted)
+- Runs on your VPS
+- No API costs
+- Requires Ollama server setup
+
+## Project Structure
+
+```
+agentic-toolkit/
+├── bin/
+│   └── agentic-toolkit.js    # Main CLI entry point
+├── config/
+│   └── .env.example          # Environment template
+├── templates/
+│   └── plan.md               # Example project plan
+├── scripts/
+│   ├── plan.sh               # Convenience script
+│   ├── switch-openrouter.sh  # Provider switcher
+│   └── switch-ollama.sh      # Provider switcher
+└── .github/
+    └── workflows/            # CI/CD pipelines
 ```
 
 ## Contributing
 
 Please see [CONTRIBUTING.md](CONTRIBUTING.md) for details on how to contribute to this project.
+
+## Publishing
+
+See [PUBLISH.md](PUBLISH.md) for publishing instructions.
 
 ## License
 
