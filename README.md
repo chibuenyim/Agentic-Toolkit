@@ -95,21 +95,15 @@ agentic-toolkit/
 │   └── .env.example          # Environment template
 ├── templates/
 │   └── plan.md               # Example project plan
-├── scripts/
-│   ├── plan.sh               # Convenience script
-│   ├── switch-openrouter.sh  # Provider switcher
-│   └── switch-ollama.sh      # Provider switcher
-└── .github/
-    └── workflows/            # CI/CD pipelines
+└── scripts/
+    ├── plan.sh               # Convenience script
+    ├── switch-openrouter.sh  # Provider switcher
+    └── switch-ollama.sh      # Provider switcher
 ```
 
 ## Contributing
 
 Please see [CONTRIBUTING.md](CONTRIBUTING.md) for details on how to contribute to this project.
-
-## Publishing
-
-See [PUBLISH.md](PUBLISH.md) for publishing instructions.
 
 ## License
 
