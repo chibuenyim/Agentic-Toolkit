@@ -1,25 +1,42 @@
-# 🛠️ Agentic Toolkit
+# 🤖 Agentic Toolkit v2.0
 
-A global CLI for agentic development with multi-provider AI support (OpenRouter & Ollama).
+**Truly Agentic Development** - AI-powered planning and execution for autonomous software development
+**Multi-Agent Architecture** - Specialized agents for planning, implementation, testing, and deployment
+**Infrastructure-Aware** - Automatically adapts to your environment and deployment requirements
 
-## 📋 Open Core Model
+## 🚀 v2 Agentic Capabilities
 
-**Free & Open Source**: Core features are available under MIT License
-**Premium Features**: Advanced capabilities available with commercial licensing
+### 🤖 Agent Swarm Architecture
+- **Planning Agent**: Transforms requirements into hierarchical executable tasks
+- **Implementation Agent**: Code generation with automated testing and optimization
+- **Testing Agent**: Comprehensive test suite generation and validation
+- **Deployment Agent**: Infrastructure provisioning and production deployment
+- **Monitoring Agent**: Performance tracking and continuous optimization
 
-### Core Features (Free)
-- ✅ Basic task planning and breakdown
-- ✅ OpenRouter and Ollama AI provider support
-- ✅ CLI interface for development workflows
-- ✅ Configuration management
-- ✅ Community support
+### 🎯 Agentic Workflow Integration
+- **Hierarchical Task Breakdown**: Multi-level planning optimized for agent processing
+- **Parallel Execution**: Agents work simultaneously on independent tasks
+- **Real-time Adaptation**: Dynamic plan evolution based on agent feedback
+- **Infrastructure Intelligence**: Deployment strategies based on detected environment
 
-### Premium Features (Commercial License Required)
-- 🔒 Advanced AI integrations
-- 🔒 Enterprise security & compliance
-- 🔒 Priority support
-- 🔒 Custom development
-- 🔒 Extended automation capabilities
+### 📋 Open Core Model
+
+**Free & Open Source**: Core agent capabilities available under MIT License
+**Premium Features**: Advanced multi-agent orchestration with commercial licensing
+
+#### Core Features (Free)
+- ✅ Agent-optimized task planning and breakdown
+- ✅ OpenRouter and Ollama AI provider integration
+- ✅ CLI interface for agent workflow management
+- ✅ Infrastructure detection and recommendations
+- ✅ Community support and basic agent orchestration
+
+#### Premium Features (Commercial License Required)
+- 🔒 Multi-agent swarm orchestration
+- 🔒 Advanced AI model integrations
+- 🔒 Enterprise-grade security and compliance
+- 🔒 Priority support and custom agent development
+- 🔒 Extended automation and monitoring capabilities
 
 ## Installation
 
