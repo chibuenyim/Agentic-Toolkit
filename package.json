@@ -6,6 +6,7 @@
   "bin": {
     "agentic-toolkit": "./bin/agentic-toolkit.js"
   },
+  "author": "Ezeaka Chibuenyim",
   "keywords": ["ai", "agentic", "taskmaster", "openrouter", "ollama", "cline"],
   "license": "MIT",
   "dependencies": {

@@ -25,4 +25,4 @@ Thank you for your interest in contributing!
 
 ## Reporting Bugs
 
-Please use the [GitHub Issues](https://github.com/your-username/agentic-toolkit/issues) page to report bugs. Include details like your OS, Node version, and steps to reproduce.
+Please use the [GitHub Issues](https://github.com/chibuenyim/Agentic-Toolkit/issues) page to report bugs. Include details like your OS, Node version, and steps to reproduce.

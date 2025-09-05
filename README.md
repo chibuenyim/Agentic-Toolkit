@@ -14,7 +14,7 @@ npm install -g agentic-toolkit
 
 1. Clone the repository:
    ```bash
-   git clone https://github.com/your-username/agentic-toolkit.git
+   git clone https://github.com/chibuenyim/Agentic-Toolkit.git
    cd agentic-toolkit
    ```
 
